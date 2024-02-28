@@ -1,0 +1,800 @@
+openapi: 3.0.0
+info:
+  title: Hush API
+  version: 1.0.9
+  description: |
+    This is reverse engineered documentation for the [Hush](https://hush.ac) app (`ac.hush.app`). It was created by MITM'ing the Android version 1.0.9 traffic.
+
+servers:
+  - url: https://771b92c9.hush.ac
+
+paths:
+  /:
+    post:
+      summary: TODO
+      description: TODO
+      responses:
+        '200':
+          description: Dark ritual successfully invoked
+        '500':
+          description: Internal server error during the ritual
+
+  /api/activities/count:
+    get:
+      summary: Get number of unread notifications
+      description: This returns the number that is displayed on the bell icon in the app.
+      responses:
+        '200':
+          description: Number of unread notifications
+          content:
+            application/json:
+              example: |
+                {
+                  "unreadCount":"6"
+                }
+
+  /api/chats/unread-count:
+    get:
+      summary: Get number of unread chats
+      description: This returns the number that is displayed on the chat icon in the app.
+      responses:
+        '200':
+          description: Number of unread notifications
+          content:
+            application/json:
+              example: |
+                {
+                  "unreadCount":"0"
+                }
+
+  /api/device:
+    post:
+      summary: TODO Figure out what this is for
+      description: |
+        This sends data about the device we're on to Hush.
+
+        This also sets the cookie for authentication of other requests. 
+        
+        Cookie information:
+        * `<URL and Base64 encoded JSON>.<password>`
+        * JSON is `{"userId":"<UID>"}`
+        * Password seems to be a random string given by the server
+      requestBody:
+        description: Device information
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                model:
+                  type: string
+                platform:
+                  type: string
+                osVersion:
+                  type: integer
+                manufacturer:
+                  type: string
+                isVirtual:
+                  type: boolean
+                webViewVersion:
+                  type: string
+            examples:
+              AndroidVirtualDevice:
+                summary: Data sent by AOSP's AVD
+                value:
+                  name: sdk_gphone64_x86_64
+                  model: sdk_gphone64_x86_64
+                  platform: android
+                  osVersion: 13
+                  manufacturer: Google
+                  isVirtual: true
+                  webViewVersion: 103.0.5060.71
+      responses:
+        '204':
+          description: Data Received
+
+  /api/get-badge-count:
+    get:
+      summary: TODO
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {
+                  "badgeCount":"60"
+                }
+
+  /api/search-background:
+    patch:
+      summary: Search for background images
+      description: |
+        Runs a search for background images related to text.
+      parameters:
+        - in: query
+          name: text
+          schema:
+            type: string
+          description: The text to search for
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {
+                    "results": {
+                        "finalQuery": "mock",
+                        "results": {
+                        "page": 1,
+                        "per_page": 15,
+                        "photos": [
+                            {
+                            "id": 15988008,
+                            "width": 4498,
+                            "height": 6932,
+                            "url": "https://www.pexels.com/photo/photo-of-a-woman-crossing-a-street-between-skyscrapers-15988008/",
+                            "photographer": "Kyle  Miller",
+                            "photographer_url": "https://www.pexels.com/@kyle-miller-169884138",
+                            "photographer_id": 169884138,
+                            "avg_color": "#414141",
+                            "src": {
+                                "original": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg",
+                                "large2x": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                                "large": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                                "medium": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&h=350",
+                                "small": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&h=130",
+                                "portrait": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
+                                "landscape": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+                                "tiny": "https://images.pexels.com/photos/15988008/pexels-photo-15988008.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280"
+                            },
+                            "liked": false,
+                            "alt": ""
+                            },
+                            {
+                            "id": 5331154,
+                            "width": 4480,
+                            "height": 6720,
+                            "url": "https://www.pexels.com/photo/photo-of-woman-playing-acoustic-guitar-5331154/",
+                            "photographer": "Monstera",
+                            "photographer_url": "https://www.pexels.com/@gabby-k",
+                            "photographer_id": 3372733,
+                            "avg_color": "#B6AA9F",
+                            "src": {
+                                "original": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg",
+                                "large2x": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+                                "large": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                                "medium": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&h=350",
+                                "small": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&h=130",
+                                "portrait": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=1200&w=800",
+                                "landscape": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=627&w=1200",
+                                "tiny": "https://images.pexels.com/photos/5331154/pexels-photo-5331154.jpeg?auto=compress&cs=tinysrgb&dpr=1&fit=crop&h=200&w=280"
+                            },
+                            "liked": false,
+                            "alt": "Focused female in hat and dress playing acoustic guitar while sitting on armchair near potted plant during rehearsal at home"
+                            }
+                        ],
+                        "total_results": 1918,
+                        "next_page": "https://api.pexels.com/v1/videos/search/?orientation=portrait&page=2&perPage=5&per_page=15&query=beach&size=small",
+                        "url": "https://api-server.pexels.com/search/videos/beach/"
+                        }
+                    },
+                    "text": "I miss cuddling"
+                    }
+
+  /chats/{conversationId}:
+    get:
+      summary: Get chat details
+      description: |
+        TODO
+      parameters:
+        - in: path
+          name: conversationId
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The conversation ID
+          example: 79685214-7d97-4904-950e-558509809175
+      responses:
+        '200':
+          description: Details about the chat
+          content:
+            application/json:
+              example: |
+                {
+                "post": {
+                    "id": "9e532cb9-e9c8-4563-83a4-ee2844b70fb4",
+                    "createdAt": "2024-02-21T01:15:54.100Z",
+                    "updatedAt": "2024-02-22T14:15:59.322Z",
+                    "userId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                    "parentId": null,
+                    "groupId": null,
+                    "text": "10 likes & I’ll go to the gym 😭",
+                    "font": "serif",
+                    "mediaUrl": "https://images.pexels.com/photos/772662/pexels-photo-772662.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                    "mediaType": "IMAGE",
+                    "address": {
+                    "subRegion": "Oakland County",
+                    "region": "Michigan",
+                    "country": "USA"
+                    },
+                    "heartsCount": 100,
+                    "repliesCount": 21,
+                    "chatsCount": 0,
+                    "moderationStatus": "CLEAR",
+                    "flagCount": 1,
+                    "isNsfw": false,
+                    "deleted": false,
+                    "isGroupNsfw": false,
+                    "flockId": null,
+                    "isChatPost": false,
+                    "isStory": false,
+                    "storyTitle": null,
+                    "hoursAgo": "2d"
+                },
+                "userId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                "quidsDeductionAmountForImageSharing": 7,
+                "conversation": {
+                    "id": "79685214-7d97-4904-950e-558509809175",
+                    "createdAt": "2024-02-22T14:01:19.461Z",
+                    "updatedAt": "2024-02-22T14:22:26.677Z",
+                    "postId": "9e532cb9-e9c8-4563-83a4-ee2844b70fb4",
+                    "title": "Doorknob",
+                    "postImageSrc": "https://images.pexels.com/photos/772662/pexels-photo-772662.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                    "postUserId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                    "creatorId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                    "lastMessage": "You should go to the",
+                    "lastMessageAuthorId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                    "messagesCount": 1,
+                    "postUsername": "Doorknob",
+                    "creatorUsername": "lime_thermostat",
+                    "deletedByPostUser": false,
+                    "deletedByCreator": false,
+                    "favoriteByPostUser": null,
+                    "favoriteByCreator": false,
+                    "creatorUnreadMessagesCount": 0,
+                    "postUserUnreadMessagesCount": 1,
+                    "lastMessageAt": "2024-02-22T14:21:26.388Z",
+                    "postUserAllowImage": true,
+                    "creatorAllowImage": false,
+                    "post": {
+                    "id": "9e532cb9-e9c8-4563-83a4-ee2844b70fb4",
+                    "createdAt": "2024-02-21T01:15:54.100Z",
+                    "updatedAt": "2024-02-22T14:15:59.322Z",
+                    "userId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                    "parentId": null,
+                    "groupId": null,
+                    "text": "10 likes & I’ll go to the gym 😭",
+                    "font": "serif",
+                    "mediaUrl": "https://images.pexels.com/photos/772662/pexels-photo-772662.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                    "mediaType": "IMAGE",
+                    "longitude": "-83.20127051977066",
+                    "latitude": "42.652714930670165",
+                    "ip": "172.58.127.127",
+                    "address": {
+                        "subRegion": "Oakland County",
+                        "region": "Michigan",
+                        "country": "USA"
+                    },
+                    "heartsCount": 100,
+                    "repliesCount": 21,
+                    "chatsCount": 0,
+                    "moderationStatus": "CLEAR",
+                    "flagCount": 1,
+                    "algoBanReason": {},
+                    "seeded": false,
+                    "isNsfw": false,
+                    "deleted": false,
+                    "isGroupNsfw": false,
+                    "flockId": null,
+                    "isChatPost": false,
+                    "isStory": false,
+                    "storyTitle": null
+                    },
+                    "messages": [
+                    {
+                        "id": "385fc41c-abf1-4a46-9c79-4bcedfcd92b3",
+                        "createdAt": "2024-02-22T14:21:26.388Z",
+                        "updatedAt": "2024-02-22T14:21:26.388Z",
+                        "text": "You should go to the gym! You've got this! <3",
+                        "attachmentUrl": null,
+                        "attachmentType": null,
+                        "senderId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                        "conversationId": "79685214-7d97-4904-950e-558509809175",
+                        "deletedByCreator": false,
+                        "deletedByPostUser": false,
+                        "readByReceiver": false
+                    }
+                    ],
+                    "extra": {
+                    "conversationPartnerId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                    "userBlocked": false,
+                    "conversationPartnerBlocked": false
+                    }
+                },
+                "chatMessages": [
+                    {
+                    "id": "385fc41c-abf1-4a46-9c79-4bcedfcd92b3",
+                    "createdAt": "2024-02-22T14:21:26.388Z",
+                    "updatedAt": "2024-02-22T14:21:26.388Z",
+                    "text": "You should go to the gym! You've got this! <3",
+                    "attachmentUrl": null,
+                    "attachmentType": null,
+                    "senderId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                    "conversationId": "79685214-7d97-4904-950e-558509809175",
+                    "deletedByCreator": false,
+                    "deletedByPostUser": false,
+                    "readByReceiver": false
+                    }
+                ],
+                "partnerChatProfile": {
+                    "id": "c0676005-5405-40ce-8b95-5c4ddabf73d9",
+                    "createdAt": "2024-02-20T17:48:04.761Z",
+                    "updatedAt": "2024-02-20T23:25:20.085Z",
+                    "userId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                    "gender": "OTHER",
+                    "age": "18-20",
+                    "address": {
+                    "subRegion": "Oakland County",
+                    "region": "Michigan",
+                    "country": "USA"
+                    },
+                    "latitude": "42.65179024179435",
+                    "longitude": "-83.2038099511256"
+                },
+                "conversationPartner": {
+                    "id": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                    "createdAt": "2024-02-20T17:48:04.748Z",
+                    "updatedAt": "2024-02-22T14:21:26.381Z",
+                    "username": "Doorknob",
+                    "profileUpdatedAt": "2024-02-20T23:25:20.097Z",
+                    "gender": null,
+                    "age": null,
+                    "address": null,
+                    "pin": null,
+                    "ratedChatsCount": 0,
+                    "rating": 5,
+                    "voteUpCount": 1,
+                    "voteDownCount": 1,
+                    "postsCount": 11,
+                    "heartsCount": 11,
+                    "repliesCount": 13,
+                    "chatsCount": 40,
+                    "chatProfiles": null,
+                    "seeded": false,
+                    "moderationStatus": "CLEAR",
+                    "deleted": false,
+                    "quidsCount": null,
+                    "replyHeartsCount": 12,
+                    "unreadNotificationsCount": "11"
+                },
+                "user": {
+                    "id": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                    "createdAt": "2024-02-22T13:59:15.162Z",
+                    "updatedAt": "2024-02-22T14:21:26.381Z",
+                    "username": "line_2",
+                    "profileUpdatedAt": "2024-02-22T14:03:48.394Z",
+                    "gender": null,
+                    "age": null,
+                    "address": null,
+                    "pin": null,
+                    "ratedChatsCount": 0,
+                    "rating": 5,
+                    "voteUpCount": 0,
+                    "voteDownCount": 0,
+                    "postsCount": 1,
+                    "heartsCount": 3,
+                    "repliesCount": 2,
+                    "chatsCount": 1,
+                    "chatProfiles": null,
+                    "seeded": false,
+                    "moderationStatus": "CLEAR",
+                    "deleted": false,
+                    "quidsCount": "1.75",
+                    "replyHeartsCount": 1,
+                    "unreadNotificationsCount": "6"
+                },
+                "userChatProfile": {
+                    "id": "21501885-a4bc-422a-aa9d-898088cfd1e6",
+                    "createdAt": "2024-02-22T13:59:15.177Z",
+                    "updatedAt": "2024-02-22T14:03:48.385Z",
+                    "userId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                    "gender": "MALE",
+                    "age": "26-29",
+                    "address": {
+                    "subRegion": "Santa Clara County",
+                    "region": "California",
+                    "country": "USA"
+                    },
+                    "latitude": "37.42342342342342",
+                    "longitude": "-122.08395287867832"
+                },
+                "favoriteByCurrentUser": false,
+                "isUpVote": false,
+                "isDownVote": false,
+                "serverToken": "server-token",
+                "wsUrl": "wss://p2om2xy203.execute-api.us-east-1.amazonaws.com/prod?rt=conversation&id=79685214-7d97-4904-950e-558509809175",
+                "isRateBlockEnabled": false,
+                "address": "Oakland County, Michigan, USA",
+                "allowImage": true,
+                "visibleCameraIcon": false,
+                "quidTransactionsCount": 0
+                }
+    put:
+      summary: Change chat options
+      parameters:
+        - in: path
+          name: conversationId
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The conversation ID
+          example: 79685214-7d97-4904-950e-558509809175
+      requestBody:
+        description: Chat options
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                allowImage:
+                  type: string
+                  description: If we're willing to accept images in this chat. **NOTE** Only `on` has been observed. Turning off the switch didn't send a different value.
+            example:
+              allowImage: on
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {
+                  "success":true
+                }
+    post:
+      summary: Send a chat message
+      description: TODO
+      parameters:
+        - in: path
+          name: conversationId
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The conversation ID
+          example: 79685214-7d97-4904-950e-558509809175
+      requestBody:
+        description: Chat message
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  description: The text to send in a message
+            example:
+              text: Hey! Here's a message
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {
+                  "success":true,
+                  "message":"Message sent successfully"
+                }
+
+  /chats/{conversationId}/favorite:
+    put:
+      summary: Mark chat as a favorite
+      description: |
+        TODO
+      requestBody:
+        description: Favorite
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                favoriteByCurrentUser:
+                  type: boolean
+                  description: If the message should be marked as a favorite conversation.
+            example:
+              favoriteByCurrentUser: true
+      parameters:
+        - in: path
+          name: conversationId
+          required: true
+          schema:
+            type: string
+            minimum: 1
+          description: The conversation ID
+      responses:
+        '200':
+          description: Details about the chat
+          content:
+            application/json:
+              example: |
+                ""
+
+  /chats:
+    get:
+      summary: Get conversations for user
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {
+                  "conversations": [
+                    {
+                      "id": "79685214-7d97-4904-950e-558509809175",
+                      "createdAt": "2024-02-22T14:01:19.461Z",
+                      "updatedAt": "2024-02-22T15:32:42.973Z",
+                      "postId": "9e532cb9-e9c8-4563-83a4-ee2844b70fb4",
+                      "title": "Doorknob",
+                      "postImageSrc": "https://images.pexels.com/photos/772662/pexels-photo-772662.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                      "postUserId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                      "creatorId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                      "lastMessage": "You should go to the",
+                      "lastMessageAuthorId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                      "messagesCount": 1,
+                      "postUsername": "Doorknob",
+                      "creatorUsername": "lime_thermostat",
+                      "deletedByPostUser": false,
+                      "deletedByCreator": false,
+                      "favoriteByPostUser": null,
+                      "favoriteByCreator": false,
+                      "creatorUnreadMessagesCount": 0,
+                      "postUserUnreadMessagesCount": 0,
+                      "lastMessageAt": "2024-02-22T14:21:26.388Z",
+                      "postUserAllowImage": false,
+                      "creatorAllowImage": false,
+                      "extra": {
+                        "conversationPartnerId": "7954ec77-cfb4-4cf6-8a30-b495f23edd8d",
+                        "conversationPartnerUsername": "Doorknob",
+                        "userBlocked": false,
+                        "conversationPartnerBlocked": false
+                      }
+                    }
+                  ],
+                  "userId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835"
+                }
+
+  /discover:
+    get:
+      summary: TODO; Document this and subfolders
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /flocks:
+    get:
+      summary: TODO; Document this and subfolders
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /group-members:
+    get:
+      summary: TODO; Document this and subfolders
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /groups:
+    get:
+      summary: TODO; Document this and subfolders
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /me/account:
+    get:
+      summary: Get general user account information
+      parameters:
+        - in: cookie
+          name: Hush
+          required: true
+          schema:
+            type: string
+          description: Hush
+          example: 79685214-7d97-4904-950e-558509809175
+      responses:
+        '200':
+          description: Account information response
+          content:
+            application/json:
+              example: |
+                {
+                  "stats": {
+                    "postsCount": 1,
+                    "heartsCount": 2,
+                    "repliesCount": 1
+                  },
+                  "activities": [
+                    {
+                      "id": "17e3479e-bc8d-4436-a3a4-f87d4861c09f",
+                      "type": "HEART",
+                      "post": {
+                        "id": "720af2cb-0abd-4dd5-8723-f42caa9f4dbc",
+                        "createdAt": "2024-02-22T14:04:25.073Z",
+                        "updatedAt": "2024-02-22T14:07:00.035Z",
+                        "userId": "7dbd39f2-b5a0-47e9-9107-dfd2d9e6b835",
+                        "parentId": null,
+                        "groupId": null,
+                        "text": "I miss cuddling",
+                        "font": "mono",
+                        "mediaUrl": "https://images.pexels.com/photos/4669104/pexels-photo-4669104.jpeg?auto=compress&cs=tinysrgb&h=650&w=940",
+                        "mediaType": "IMAGE",
+                        "address": {
+                          "subRegion": "Santa Clara County",
+                          "region": "California",
+                          "country": "USA"
+                        },
+                        "heartsCount": 2,
+                        "repliesCount": 3,
+                        "chatsCount": 0,
+                        "moderationStatus": "CLEAR",
+                        "flagCount": 0,
+                        "isNsfw": false,
+                        "deleted": false,
+                        "isGroupNsfw": false,
+                        "flockId": null,
+                        "isChatPost": false,
+                        "isStory": false,
+                        "storyTitle": null,
+                        "hoursAgo": "3m"
+                      },
+                      "group": null,
+                      "replyId": null,
+                      "timeAgo": "1m",
+                      "read": false
+                    }
+                  ],
+                  "hasNextPage": false
+                }
+        '204':
+          description: No account information; Need cookie for util
+
+  /me/change-nickname:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /me/chat-profile:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /me/quids:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /me/settings:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /my:
+    get:
+      summary: TODO; Document this and subfolders
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /posts:
+    get:
+      summary: TODO; Document this and subfolders
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /recaptcha:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /terms-of-use:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
+
+  /videos:
+    get:
+      summary: TODO; Document this
+      description: TODO
+      responses:
+        '200':
+          description: TODO
+          content:
+            application/json:
+              example: |
+                {}
