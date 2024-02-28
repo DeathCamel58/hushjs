@@ -1,0 +1,16 @@
+{
+  "entryPoints": [
+    "src/*.ts",
+    "src/**/*.ts"
+  ],
+  "out": "docs",
+  "validation": {
+    "notExported": true,
+    "invalidLink": true,
+    "notDocumented": true
+  },
+  "navigationLinks": {
+    "Repository": "https://github.com/DeathCamel58/hushjs",
+    "RandomCPU": "https://randomcpu.com"
+  }
+}
