@@ -76,6 +76,27 @@ describe('User', () => {
     expect(data).toBe(true);
   });
 
+  test('Get User Posts', async () => {
+    let data = await client.user.getPosts();
+
+    expect(data).toBeDefined();
+    expect(data?.chunkedPosts).toBeDefined();
+  });
+
+  test('Get User Hearts', async () => {
+    let data = await client.user.getHearts();
+
+    expect(data).toBeDefined();
+    expect(data?.chunkedPosts).toBeDefined();
+  });
+
+  test('Get User Replied', async () => {
+    let data = await client.user.getReplied();
+
+    expect(data).toBeDefined();
+    expect(data?.chunkedPosts).toBeDefined();
+  });
+
   test('Get Unread Chat Count', async () => {
     let data = await client.user.getUnreadChatCount();
 

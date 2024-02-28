@@ -343,4 +343,79 @@ export class UserAPI {
     }
     return null;
   }
+
+  /**
+   * Get the {@link Post}s created by the current {@link User}
+   */
+  async getPosts(): Promise<PostResponse|null> {
+    try {
+      const response = await axios.get('https://771b92c9.hush.ac/my/posts',
+        {
+          headers: {'Cookie': `Hush=${authService.cookie}`},
+          params: {
+            _data: 'routes/__app/my.posts'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return null;
+  }
+
+  /**
+   * Get the {@link Post}s hearted by the current {@link User}
+   */
+  async getHearts(): Promise<PostResponse|null> {
+    try {
+      const response = await axios.get('https://771b92c9.hush.ac/my/posts/hearted',
+        {
+          headers: {'Cookie': `Hush=${authService.cookie}`},
+          params: {
+            _data: 'routes/__app/my.posts.hearted'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return null;
+  }
+
+  /**
+   * Get the {@link Post}s hearted by the current {@link User}
+   */
+  async getReplied(): Promise<PostResponse|null> {
+    try {
+      const response = await axios.get('https://771b92c9.hush.ac/my/posts/replied',
+        {
+          headers: {'Cookie': `Hush=${authService.cookie}`},
+          params: {
+            _data: 'routes/__app/my.posts.replied'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return null;
+  }
 }
