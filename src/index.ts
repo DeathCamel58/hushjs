@@ -4,6 +4,7 @@ import {ChatAPI} from "./apiFunctions/Chats";
 import {DiscoverAPI} from "./apiFunctions/Discover";
 import {FlocksAPI} from "./apiFunctions/Flocks";
 import {GroupsApi} from "./apiFunctions/Group";
+import {PostAPI} from "./apiFunctions/Posts";
 
 /**
  * Client class for interfacing with the API
@@ -38,6 +39,11 @@ export class Client {
    * The {@link GroupsApi} for this Client
    */
   groups = new GroupsApi;
+
+  /**
+   * The {@link PostAPI} for this Client
+   */
+  posts = new PostAPI;
 
   public constructor(cookie?: string, eulaAccepted?: boolean) {
     this.auth = new AuthService();
