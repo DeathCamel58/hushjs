@@ -5,6 +5,7 @@ import {DiscoverAPI} from "./apiFunctions/Discover";
 import {FlocksAPI} from "./apiFunctions/Flocks";
 import {GroupsApi} from "./apiFunctions/Group";
 import {PostAPI} from "./apiFunctions/Posts";
+import {VideoAPI} from "./apiFunctions/Videos";
 
 /**
  * Client class for interfacing with the API
@@ -44,6 +45,11 @@ export class Client {
    * The {@link PostAPI} for this Client
    */
   posts = new PostAPI;
+
+  /**
+   * The {@link VideoAPI} for this Client
+   */
+  videos = new VideoAPI;
 
   public constructor(cookie?: string, eulaAccepted?: boolean) {
     this.auth = new AuthService();
