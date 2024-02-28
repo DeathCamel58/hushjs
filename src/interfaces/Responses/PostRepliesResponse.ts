@@ -13,7 +13,7 @@ interface PostRepliesResponse {
   user: User;
 
   /**
-   * The {@link Reply}s to the {@link Post}
+   * The {@link Post}s that are replies to the {@link Post}
    */
   postReplies: Post[];
 
