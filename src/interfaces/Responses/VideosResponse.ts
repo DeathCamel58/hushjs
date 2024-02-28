@@ -7,6 +7,13 @@ interface VideosResponse {
    */
   page: number;
 
+  /**
+   * The returned videos
+   *
+   * NOTE: Videos are a {@link Post}
+   *
+   * NOTE: This array has only been observed with one element
+   */
   videos: Post[];
 
   /**
@@ -21,6 +28,9 @@ interface VideosResponse {
    */
   hasNextPage?: boolean;
 
+  /**
+   * The video {@link Post}
+   */
   post: Post;
 
   /**
