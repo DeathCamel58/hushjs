@@ -1,7 +1,6 @@
 {
   "entryPoints": [
-    "src/*.ts",
-    "src/**/*.ts"
+    "./src"
   ],
   "out": "docs",
   "validation": {
@@ -12,5 +11,6 @@
   "navigationLinks": {
     "Repository": "https://github.com/DeathCamel58/hushjs",
     "RandomCPU": "https://randomcpu.com"
-  }
+  },
+  "entryPointStrategy": "expand"
 }
