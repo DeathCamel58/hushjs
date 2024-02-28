@@ -1,7 +1,7 @@
 /**
  * The current User's stats and activity notifications
  *
- * Response returned by the API at `/me/account`
+ * Response returned by the API at GET `/me/account`
  */
 interface AccountResponse {
   /**

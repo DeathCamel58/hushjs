@@ -25,7 +25,7 @@ export class GroupsApi {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return null;
   }
@@ -59,7 +59,7 @@ export class GroupsApi {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return false;
   }
@@ -84,7 +84,7 @@ export class GroupsApi {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return null;
   }
@@ -116,7 +116,7 @@ export class GroupsApi {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return false;
   }

@@ -1,4 +1,5 @@
 import {Client} from "../src";
+import crypto from "crypto";
 
 describe('User', () => {
   let client = new Client();
@@ -11,6 +12,68 @@ describe('User', () => {
 
     expect(data).toBeDefined();
     expect(data?.stats).toBeDefined();
+  });
+
+  test('Change Nickname (Good Nickname)', async () => {
+    // Generate a random string to use as a nickname
+    const nickname = crypto.randomBytes(7).toString('hex').replace(' ', '');
+    let data = await client.user.changeNickname(nickname);
+
+    expect(data).toBeDefined();
+    expect(data).toBe(true);
+  });
+
+  test('Change Nickname (Bad Nickname)', async () => {
+    // Ampersands aren't allowed in nicknames
+    let data = await client2.user.changeNickname('Test&Name');
+
+    expect(data).toBeDefined();
+    expect(data).toBe(false);
+  });
+
+  test('Get Chat Profile', async () => {
+    let data = await client.user.getChatProfile();
+
+    expect(data).toBeDefined();
+    expect(data?.chatProfile).toBeDefined();
+  });
+
+  test('Set Chat Profile', async () => {
+    const gender = "MALE";
+    const age = "18-20";
+    const latitude = 37.42342342342342;
+    const longitude = -122.08395287867832;
+    let data = await client.user.setChatProfile(gender, age, latitude, longitude);
+
+    expect(data).toBeDefined();
+    expect(data).toBe(true);
+  });
+
+  test('Get User and Settings', async () => {
+    let data = await client.user.getUser();
+
+    expect(data).toBeDefined();
+    expect(data?.user).toBeDefined();
+    expect(data?.setting).toBeDefined();
+  });
+
+  test('Update User Settings', async () => {
+    const settings = {
+      hasPrivacyPin: false,
+      pushReplies: true,
+      pushHearts: false,
+      pushChat: true,
+      pushNearby: false,
+      pushGroups: true,
+      allowNsfwPosts: false,
+      removeNsfwContent: true,
+      pushFlock: true,
+      pushSisterReplies: false,
+    };
+    let data = await client.user.updateSetting(settings);
+
+    expect(data).toBeDefined();
+    expect(data).toBe(true);
   });
 
   test('Get Unread Chat Count', async () => {
@@ -35,6 +98,6 @@ describe('User', () => {
     let data = await client.user.getSearchBackground('Test');
 
     expect(data).toBeDefined();
-    expect(data?.length).toEqual(10);
+    expect(data?.results.results.photos.length).toEqual(10);
   });
 });

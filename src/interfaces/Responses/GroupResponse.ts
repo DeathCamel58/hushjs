@@ -1,5 +1,5 @@
 /**
- * Response returned by the API at `/groups/${groupId}/posts`
+ * Response returned by the API at GET `/groups/${groupId}/posts`
  */
 interface GroupResponse {
   /**

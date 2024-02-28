@@ -25,7 +25,7 @@ export class DiscoverAPI {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return null;
   }
@@ -52,7 +52,7 @@ export class DiscoverAPI {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return null;
   }

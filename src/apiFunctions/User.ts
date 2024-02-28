@@ -25,7 +25,7 @@ export class UserAPI {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return null;
   }
@@ -36,10 +36,11 @@ export class UserAPI {
   /**
    * Change the {@link User#username} for the current {@link User}
    * @param nickname The nickname to set
+   * @return `true` if {@link User#username} was changed
    */
-  async changeNickname(nickname: string) {
+  async changeNickname(nickname: string): Promise<boolean> {
     try {
-      const response = await axios.put('https://771b92c9.hush.ac/change-nickname',
+      const response = await axios.put('https://771b92c9.hush.ac/me/change-nickname',
         { username: nickname },
         {
           headers: {
@@ -52,13 +53,131 @@ export class UserAPI {
         }
       );
 
-      if (response.status === 204) {
-        return true;
+      if (response.status === 200) {
+        return response.data.success;
       } else {
-        console.info('Error accepting terms of use');
+        console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error accepting EULA: ', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return false;
+  }
+
+  /**
+   * Get the current {@link User} {@link ChatProfile}
+   */
+  async getChatProfile(): Promise<ChatProfileResponse|null> {
+    try {
+      const response = await axios.get('https://771b92c9.hush.ac/me/chat-profile',
+        {
+          headers: {'Cookie': `Hush=${authService.cookie}`},
+          params: {
+            _data: 'routes/__app/me.chat-profile'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return null;
+  }
+
+  /**
+   * Change the current {@link User}'s {@link ChatProfile}
+   * @param gender The gender to set
+   * @param age The age to set
+   * @param latitude The latitude to set
+   * @param longitude The longitude to set
+   */
+  async setChatProfile(gender: string, age: string, latitude: Number, longitude: Number): Promise<boolean> {
+    try {
+      const response = await axios.post('https://771b92c9.hush.ac/me/chat-profile',
+        {
+          gender: gender,
+          age: age,
+          latitude: latitude,
+          longitude: longitude,
+        },
+        {
+          headers: {
+            'Cookie': `Hush=${authService.cookie}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          params: {
+            _data: 'routes/__app/me.chat-profile'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data.success;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return false;
+  }
+
+  /**
+   * Get the current {@link User} and their {@link Setting}s
+   */
+  async getUser(): Promise<UserResponse|null> {
+    try {
+      const response = await axios.get('https://771b92c9.hush.ac/me/settings',
+        {
+          headers: {'Cookie': `Hush=${authService.cookie}`},
+          params: {
+            _data: 'routes/__app/me.settings'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return null;
+  }
+
+  /**
+   * Update the {@link User} {@link Setting}
+   * @param setting The setting to set for the user
+   */
+  async updateSetting(setting: Setting): Promise<boolean> {
+    try {
+      const response = await axios.put('https://771b92c9.hush.ac/me/settings',
+        { setting },
+        {
+          headers: {
+            'Cookie': `Hush=${authService.cookie}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          params: {
+            _data: 'routes/__app/me.settings'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data.success;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
     }
     return false;
   }
@@ -68,7 +187,7 @@ export class UserAPI {
    *
    * NOTE: This {@link User} will need to accept the EULA before they can use the API.
    */
-  async create() {
+  async create(): Promise<boolean> {
     try {
       const response = await axios.post('https://771b92c9.hush.ac/api/device',
         {
@@ -98,7 +217,7 @@ export class UserAPI {
         }
       }
     } catch (error: any) {
-      console.error('Error creating user: ', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return false;
   }
@@ -106,7 +225,7 @@ export class UserAPI {
   /**
    * Accept the EULA for the current {@link User}
    */
-  async acceptEula() {
+  async acceptEula(): Promise<boolean> {
     try {
       const response = await axios.put('https://771b92c9.hush.ac/terms-of-use',
         {},
@@ -121,10 +240,10 @@ export class UserAPI {
       if (response.status === 204) {
         return true;
       } else {
-        console.info('Error accepting terms of use');
+        console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error accepting EULA: ', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return false;
   }
@@ -146,7 +265,7 @@ export class UserAPI {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
     } catch (error: any) {
-      console.error('Error:', error.response?.data || error.message);
+      console.error('Error: ', error.response?.data || error.message);
     }
     return null;
   }
@@ -203,7 +322,7 @@ export class UserAPI {
    *
    * @param text - The text to search for
    */
-  async getSearchBackground(text: string): Promise<Photo[]|null> {
+  async getSearchBackground(text: string): Promise<PhotoResponse|null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/api/search-background',
         {
@@ -215,7 +334,7 @@ export class UserAPI {
       );
 
       if (response.status === 200) {
-        return response.data.results.results.photos;
+        return response.data;
       } else {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
