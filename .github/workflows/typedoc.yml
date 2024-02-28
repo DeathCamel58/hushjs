@@ -12,10 +12,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        
       - name: Build Documentation
         run: |
           npm install
-          npm doc
+          npm run doc
 
       - name: Fix permissions
         run: |
