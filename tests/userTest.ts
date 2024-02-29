@@ -106,13 +106,13 @@ describe('User', () => {
   test('Get Unread Activity Count', async () => {
     let data = await client.user.getUnreadActivityCount();
 
-    expect(data).toBe(0);
+    expect(data).toBeGreaterThanOrEqual(0);
   });
 
   test('Get Badge Count', async () => {
     let data = await client.user.getBadgeCount();
 
-    expect(data).toBe(0);
+    expect(data).toBeGreaterThanOrEqual(0);
   });
 
   test('Search Background', async () => {

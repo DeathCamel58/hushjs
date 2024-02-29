@@ -210,8 +210,7 @@ export class UserAPI {
         // Verify that the `Hush` cookie is set
         const setCookieHeader = response.headers['set-cookie'];
         if (setCookieHeader && setCookieHeader.length > 0 && setCookieHeader[0].includes('Hush')) {
-          const HushCookie = setCookieHeader[0].split("Hush=")[1].split(";")[0];
-          authService.cookie = HushCookie;
+          authService.cookie = setCookieHeader[0].split("Hush=")[1].split(";")[0];
 
           return true;
         }
@@ -260,7 +259,7 @@ export class UserAPI {
       );
 
       if (response.status === 200) {
-        return Number(response.data.unreadCount);
+        return Number(response.data["unreadCount"]);
       } else {
         console.info(`Bad HTTP response status: ${response.status}`);
       }
@@ -282,7 +281,7 @@ export class UserAPI {
       );
 
       if (response.status === 200) {
-        return Number(response.data.unreadCount);
+        return Number(response.data["unreadCount"]);
       } else {
         console.info(`Bad HTTP response status: ${response.status}`);
       }

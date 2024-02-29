@@ -171,7 +171,7 @@ export class PostAPI {
     return false;
   }
 
-  // NOTE: Not implementing /posts/${postId}/chat, as it just returns a HTTP 204, and I don't know what it does
+  // NOTE: Not implementing /posts/${postId}/chat, as it just returns an HTTP 204, and I don't know what it does
 
   /**
    * Likes a {@link Post}

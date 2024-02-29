@@ -62,7 +62,7 @@ export interface DeviceDetails {
     isVirtual: boolean;
 
     /**
-     * The verson of webview on the device
+     * The version of webview on the device
      *
      * @example '103.0.5060.71'
      */

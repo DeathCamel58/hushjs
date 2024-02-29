@@ -42,7 +42,7 @@ interface Chat {
   userChatProfile: User;
 
   /**
-   * Is this Chat favorities
+   * Is this Chat favorites
    */
   favoriteByCurrentUser: boolean;
 

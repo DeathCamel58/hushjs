@@ -24,7 +24,7 @@ interface Message {
   /**
    * The text content of the Message
    *
-   * TODO: Check if this is undefined/null'd on an image message
+   * TODO: Check if this is undefined/null-d on an image message
    */
   text: string;
 

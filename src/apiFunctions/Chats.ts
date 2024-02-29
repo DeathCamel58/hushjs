@@ -20,7 +20,7 @@ export class ChatAPI {
       );
 
       if (response.status === 200) {
-        return response.data.conversations;
+        return response.data["conversations"];
       } else if (response.status === 204) {
         return [];
       } else {
