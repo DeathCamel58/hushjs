@@ -8,6 +8,11 @@ enum Font {
   Serif = "serif",
 
   /**
+   * A sans type font
+   */
+  Sans = "sans",
+
+  /**
    * A monospaced type font
    */
   Mono = "mono",

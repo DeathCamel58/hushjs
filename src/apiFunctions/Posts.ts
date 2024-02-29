@@ -136,17 +136,51 @@ export class PostAPI {
     return null;
   }
 
-  // TODO: Handle POST /posts/${postId}/replies
-  // NOTE: Not implementing /posts/${postId}/chat, as it just returns a HTTP 204
+  /**
+   * Reply to a {@link Post}
+   * @param postId The {@link Post#id} to reply to
+   * @param text The reply to send
+   * @param font The font this should be rendered in
+   */
+  async reply(postId: string, text: string, font: string): Promise<boolean> {
+    try {
+      const response = await axios.post(`https://771b92c9.hush.ac/posts/${postId}/replies`,
+        {
+          text: text,
+          font: font,
+        },
+        {
+          headers: {
+            'Cookie': `Hush=${authService.cookie}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          params: {
+            _data: 'routes/__app/posts.$id.replies'
+          }
+        }
+      );
+
+      if (response.status === 200) {
+        return response.data.success;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return false;
+  }
+
+  // NOTE: Not implementing /posts/${postId}/chat, as it just returns a HTTP 204, and I don't know what it does
 
   /**
    * Likes a {@link Post}
    * @param postId The {@link Post#id} to like
    */
-  async like(postId: string): Promise<PostRepliesResponse| null> {
+  async like(postId: string): Promise<PostRepliesResponse | null> {
     try {
       const response = await axios.put(`https://771b92c9.hush.ac/posts/${postId}/like`,
-        { liked: true },
+        {liked: true},
         {
           headers: {
             'Cookie': `Hush=${authService.cookie}`,
@@ -169,5 +203,54 @@ export class PostAPI {
     return null;
   }
 
-  // TODO: Handle new post creation POST /posts
+
+  /**
+   * Create a {@link Post}
+   * @param options The options to use when creating the {@link Post}
+   */
+  async new(options: {
+    mediaUrl: string,
+    text: string,
+    isNsfw: boolean,
+    tagId: any,
+    font: string,
+    latitude: number,
+    longitude: number,
+    ip: string,
+    mediaType?: string,
+  }): Promise<boolean> {
+    try {
+      const response = await axios.post(`https://771b92c9.hush.ac/posts`,
+        {
+          mediaUrl: options.mediaUrl,
+          text: options.text,
+          isNsfw: options.isNsfw,
+          tagId: options.tagId,
+          font: options.font,
+          latitude: options.latitude,
+          longitude: options.longitude,
+          ip: options.ip,
+          mediaType: options.mediaType,
+        },
+        {
+          headers: {
+            'Cookie': `Hush=${authService.cookie}`,
+            'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          params: {
+            _data: 'routes/__app/posts'
+          }
+        }
+      );
+
+      if (response.status === 204) {
+        return true;
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return false;
+  }
 }

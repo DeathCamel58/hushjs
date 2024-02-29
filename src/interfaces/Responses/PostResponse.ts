@@ -18,6 +18,7 @@ interface PostResponse {
    * Is there another page of data?
    */
   hasNextPage?: boolean;
+
   /**
    * The {@link ChatProfile} for the current {@link User}
    */
