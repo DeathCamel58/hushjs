@@ -1,4 +1,4 @@
-import {authService, AuthService} from './util/authService';
+import {AuthService} from './util/authService';
 import {UserAPI} from "./apiFunctions/User";
 import {ChatAPI} from "./apiFunctions/Chats";
 import {DiscoverAPI} from "./apiFunctions/Discover";
@@ -19,37 +19,37 @@ export class Client {
   /**
    * The {@link UserAPI} for this Client
    */
-  user = new UserAPI;
+  user: UserAPI;
 
   /**
    * The {@link ChatAPI} for this Client
    */
-  chats = new ChatAPI;
+  chats: ChatAPI;
 
   /**
    * The {@link DiscoverAPI} for this Client
    */
-  discover = new DiscoverAPI;
+  discover: DiscoverAPI;
 
   /**
    * The {@link FlocksAPI} for this Client
    */
-  flocks = new FlocksAPI;
+  flocks: FlocksAPI;
 
   /**
    * The {@link GroupsApi} for this Client
    */
-  groups = new GroupsApi;
+  groups: GroupsApi;
 
   /**
    * The {@link PostAPI} for this Client
    */
-  posts = new PostAPI;
+  posts: PostAPI;
 
   /**
    * The {@link VideoAPI} for this Client
    */
-  videos = new VideoAPI;
+  videos: VideoAPI;
 
   public constructor(cookie?: string, eulaAccepted?: boolean) {
     this.auth = new AuthService();
@@ -57,14 +57,22 @@ export class Client {
     if (cookie) {
       // If the user is already created
       // Set the cookie
-      authService.cookie = cookie;
+      this.auth.cookie = cookie;
 
       // Set the EULA acceptance
       // TODO: Don't accept the EULA if it's already been accepted
       if (eulaAccepted) {
-        authService.eulaAccepted = eulaAccepted;
+        this.auth.eulaAccepted = eulaAccepted;
       }
     }
+
+    this.user = new UserAPI(this.auth);
+    this.chats = new ChatAPI(this.auth);
+    this.discover = new DiscoverAPI(this.auth);
+    this.flocks = new FlocksAPI(this.auth);
+    this.groups = new GroupsApi(this.auth);
+    this.posts = new PostAPI(this.auth);
+    this.videos = new VideoAPI(this.auth);
   };
 
   /**
@@ -73,20 +81,20 @@ export class Client {
    * @returns A promise that resolves `true` if the connection was successful
    */
   public async connect() {
-    if (!authService.cookie) {
+    if (!this.auth.cookie) {
       // If the user needs to be created
       if (!await this.user.create()) {
         return false;
       }
     }
 
-    if (!authService.eulaAccepted) {
+    if (!this.auth.eulaAccepted) {
       // If we don't know if the EULA has been accepted, accept it now
       if (!await this.user.acceptEula()) {
         return false;
       }
 
-      authService.eulaAccepted = true;
+      this.auth.eulaAccepted = true;
     }
 
     return true;

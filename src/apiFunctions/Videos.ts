@@ -1,10 +1,19 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
  * Handles video related API requests
  */
 export class VideoAPI {
+  /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
   /**
    * Fetch the video {@link Post}s
    */
@@ -22,7 +31,7 @@ export class VideoAPI {
 
       const response = await axios.get('https://771b92c9.hush.ac/videos',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: params
         }
       );

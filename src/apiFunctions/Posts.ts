@@ -1,4 +1,4 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
@@ -6,13 +6,22 @@ import axios from "axios";
  */
 export class PostAPI {
   /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
+  /**
    * Fetch the latest {@link Post}s
    */
   async getLatest(): Promise<PostResponse | null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/posts/latest',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/posts.latest'
           }
@@ -69,7 +78,7 @@ export class PostAPI {
 
       const response = await axios.get('https://771b92c9.hush.ac/posts/nearby',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: params
         }
       );
@@ -92,7 +101,7 @@ export class PostAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/posts/popular',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/posts.popular'
           }
@@ -118,7 +127,7 @@ export class PostAPI {
     try {
       const response = await axios.get(`https://771b92c9.hush.ac/posts/${postId}`,
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/posts.$id'
           }
@@ -151,7 +160,7 @@ export class PostAPI {
         },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -183,7 +192,7 @@ export class PostAPI {
         {liked: true},
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -234,7 +243,7 @@ export class PostAPI {
         },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {

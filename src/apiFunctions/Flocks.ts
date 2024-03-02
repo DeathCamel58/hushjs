@@ -1,4 +1,4 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
@@ -6,13 +6,22 @@ import axios from "axios";
  */
 export class FlocksAPI {
   /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
+  /**
    * Search for {@link Flock}s
    */
   async get(): Promise<Flock[]|null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/flocks',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/flocks'
           }

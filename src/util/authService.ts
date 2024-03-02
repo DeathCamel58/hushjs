@@ -112,8 +112,3 @@ export class AuthService {
     }
   }
 }
-
-/**
- * The global authService
- */
-export const authService = new AuthService();

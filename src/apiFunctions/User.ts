@@ -1,4 +1,4 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
@@ -6,13 +6,22 @@ import axios from "axios";
  */
 export class UserAPI {
   /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
+  /**
    * Get the current {@link User}
    */
   async getAccount(): Promise<AccountResponse|null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/me/account',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/me.account',
           }
@@ -44,7 +53,7 @@ export class UserAPI {
         { username: nickname },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -71,7 +80,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/me/chat-profile',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/me.chat-profile'
           }
@@ -107,7 +116,7 @@ export class UserAPI {
         },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -134,7 +143,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/me/settings',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/me.settings'
           }
@@ -162,7 +171,7 @@ export class UserAPI {
         { setting },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -191,10 +200,10 @@ export class UserAPI {
     try {
       const response = await axios.post('https://771b92c9.hush.ac/api/device',
         {
-          os: authService.deviceDetails?.os,
-          deviceId: authService.deviceDetails?.deviceId,
-          pushToken: authService.deviceDetails?.pushToken,
-          details: JSON.stringify(authService.deviceDetails?.additionalProperties)
+          os: this.auth.deviceDetails?.os,
+          deviceId: this.auth.deviceDetails?.deviceId,
+          pushToken: this.auth.deviceDetails?.pushToken,
+          details: JSON.stringify(this.auth.deviceDetails?.additionalProperties)
         },
         {
           headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -210,7 +219,7 @@ export class UserAPI {
         // Verify that the `Hush` cookie is set
         const setCookieHeader = response.headers['set-cookie'];
         if (setCookieHeader && setCookieHeader.length > 0 && setCookieHeader[0].includes('Hush')) {
-          authService.cookie = setCookieHeader[0].split("Hush=")[1].split(";")[0];
+          this.auth.cookie = setCookieHeader[0].split("Hush=")[1].split(";")[0];
 
           return true;
         }
@@ -229,7 +238,7 @@ export class UserAPI {
       const response = await axios.put('https://771b92c9.hush.ac/terms-of-use',
         {},
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/terms-of-use',
           }
@@ -254,7 +263,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/api/chats/unread-count',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
         }
       );
 
@@ -276,7 +285,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/api/activities/count',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
         }
       );
 
@@ -298,7 +307,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/api/get-badge-count',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
         }
       );
 
@@ -325,7 +334,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/api/search-background',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             text: text
           }
@@ -350,7 +359,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/my/posts',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/my.posts'
           }
@@ -375,7 +384,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/my/posts/hearted',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/my.posts.hearted'
           }
@@ -400,7 +409,7 @@ export class UserAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/my/posts/replied',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/my.posts.replied'
           }

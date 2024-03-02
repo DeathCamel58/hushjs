@@ -1,4 +1,4 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
@@ -6,13 +6,22 @@ import axios from "axios";
  */
 export class DiscoverAPI {
   /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
+  /**
    * Find new {@link Post}s and {@link Group}s
    */
   async get(): Promise<Discover|null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/discover',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/discover'
           }
@@ -38,7 +47,7 @@ export class DiscoverAPI {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/discover/search/results',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/discover.search.results',
             searchText: text,

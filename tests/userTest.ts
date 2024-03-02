@@ -15,17 +15,21 @@ describe('User', () => {
   });
 
   test('Change Nickname (Good Nickname)', async () => {
+    let tmpClient = new Client();
+    await tmpClient.connect();
     // Generate a random string to use as a nickname
     const nickname = crypto.randomBytes(7).toString('hex').replace(' ', '');
-    let data = await client.user.changeNickname(nickname);
+    let data = await tmpClient.user.changeNickname(nickname);
 
     expect(data).toBeDefined();
     expect(data).toBe(true);
   });
 
   test('Change Nickname (Bad Nickname)', async () => {
+    let tmpClient = new Client();
+    await tmpClient.connect();
     // Ampersands aren't allowed in nicknames
-    let data = await client2.user.changeNickname('Test&Name');
+    let data = await tmpClient.user.changeNickname('Test&Name');
 
     expect(data).toBeDefined();
     expect(data).toBe(false);

@@ -1,4 +1,4 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
@@ -6,13 +6,22 @@ import axios from "axios";
  */
 export class GroupsApi {
   /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
+  /**
    * Gets the {@link Group}s that the current {@link User} is a member of
    */
   async get(): Promise<Group[]|null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/groups',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/groups'
           }
@@ -40,7 +49,7 @@ export class GroupsApi {
         { isMember: false },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -71,7 +80,7 @@ export class GroupsApi {
     try {
       const response = await axios.get(`https://771b92c9.hush.ac/groups/${groupId}/posts`,
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/groups.$id.posts',
           }
@@ -101,7 +110,7 @@ export class GroupsApi {
         {
           data: { isMember: true },
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {

@@ -1,4 +1,4 @@
-import {authService} from "../util/authService";
+import {AuthService} from "../util/authService";
 import axios from "axios";
 
 /**
@@ -6,13 +6,22 @@ import axios from "axios";
  */
 export class ChatAPI {
   /**
+   * The {@link AuthService} for this instance
+   */
+  auth: AuthService;
+
+  constructor(authService: AuthService) {
+    this.auth = authService;
+  }
+
+  /**
    * Get the {@link Conversation}s for the current {@link User}
    */
   async get(): Promise<Conversation[]|null> {
     try {
       const response = await axios.get('https://771b92c9.hush.ac/chats',
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/chats'
           }
@@ -39,7 +48,7 @@ export class ChatAPI {
     try {
       const response = await axios.get(`https://771b92c9.hush.ac/chats/${chatId}`,
         {
-          headers: {'Cookie': `Hush=${authService.cookie}`},
+          headers: {'Cookie': `Hush=${this.auth.cookie}`},
           params: {
             _data: 'routes/__app/chats.$id'
           }
@@ -68,7 +77,7 @@ export class ChatAPI {
         { text: text },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
@@ -99,7 +108,7 @@ export class ChatAPI {
         { allowImage: allow ? 'on' : 'off' },
         {
           headers: {
-            'Cookie': `Hush=${authService.cookie}`,
+            'Cookie': `Hush=${this.auth.cookie}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
           params: {
