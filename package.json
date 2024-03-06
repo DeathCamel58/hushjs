@@ -6,7 +6,8 @@
   "types": "./src/interfaces",
   "scripts": {
     "test": "jest --coverage",
-    "doc": "typedoc"
+    "doc": "typedoc",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "Dylan Corrales",

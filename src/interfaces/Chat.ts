@@ -86,5 +86,8 @@ interface Chat {
    */
   quidTransactionsCount: number;
 
+    /**
+     * The current {@link User}'s {@link User#id}
+     */
   userId: string;
 }

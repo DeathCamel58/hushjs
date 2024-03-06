@@ -1,4 +1,4 @@
-import {Client} from "../src";
+import Client from "../src";
 
 describe('Client', () => {
   test('Connect with new User', async () => {

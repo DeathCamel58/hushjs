@@ -1,4 +1,4 @@
-import {Client} from "../src";
+import Client from "../src";
 import crypto from "crypto";
 
 describe('User', () => {

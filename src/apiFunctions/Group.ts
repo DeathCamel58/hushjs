@@ -1,14 +1,14 @@
-import {AuthService} from "../util/authService";
+import AuthService from "../util/authService";
 import axios from "axios";
 
 /**
  * Handles group related API requests
  */
-export class GroupsApi {
+export default class GroupsApi {
   /**
    * The {@link AuthService} for this instance
    */
-  auth: AuthService;
+  private auth: AuthService;
 
   constructor(authService: AuthService) {
     this.auth = authService;

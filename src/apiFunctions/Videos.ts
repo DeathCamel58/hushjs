@@ -1,14 +1,14 @@
-import {AuthService} from "../util/authService";
+import AuthService from "../util/authService";
 import axios from "axios";
 
 /**
  * Handles video related API requests
  */
-export class VideoAPI {
+export default class VideoAPI {
   /**
    * The {@link AuthService} for this instance
    */
-  auth: AuthService;
+  private auth: AuthService;
 
   constructor(authService: AuthService) {
     this.auth = authService;

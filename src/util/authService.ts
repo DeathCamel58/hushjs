@@ -73,7 +73,7 @@ export interface DeviceDetails {
 /**
  * Stores the information necessary to authenticate requests against the API
  */
-export class AuthService {
+export default class AuthService {
   /**
    * General device details sent to their API when creating an account
    */

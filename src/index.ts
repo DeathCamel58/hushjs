@@ -1,16 +1,16 @@
-import {AuthService} from './util/authService';
-import {UserAPI} from "./apiFunctions/User";
-import {ChatAPI} from "./apiFunctions/Chats";
-import {DiscoverAPI} from "./apiFunctions/Discover";
-import {FlocksAPI} from "./apiFunctions/Flocks";
-import {GroupsApi} from "./apiFunctions/Group";
-import {PostAPI} from "./apiFunctions/Posts";
-import {VideoAPI} from "./apiFunctions/Videos";
+import AuthService from './util/authService';
+import UserAPI from "./apiFunctions/User";
+import ChatAPI from "./apiFunctions/Chats";
+import DiscoverAPI from "./apiFunctions/Discover";
+import FlocksAPI from "./apiFunctions/Flocks";
+import GroupsApi from "./apiFunctions/Group";
+import PostAPI from "./apiFunctions/Posts";
+import VideoAPI from "./apiFunctions/Videos";
 
 /**
  * Client class for interfacing with the API
  */
-export class Client {
+export default class Client {
   /**
    * The {@link AuthService} for this Client
    */
