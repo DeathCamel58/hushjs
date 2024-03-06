@@ -180,6 +180,41 @@ export default class PostAPI {
     return false;
   }
 
+  /**
+   * Reply to a {@link Post}
+   * @param postId The {@link Post#id} to get the {@link Conversation#id} for
+   */
+  async getChatId(postId: string): Promise<string|null> {
+    try {
+      const response = await axios.get(`https://771b92c9.hush.ac/posts/${postId}/chat`,
+        {
+          headers: { 'Cookie': `Hush=${this.auth.cookie}` },
+          params: {
+            _data: 'routes/__app/posts.$id.chat'
+          }
+        }
+      );
+
+      // API returns a 204 if there's a conversation ID, with `x-remix-redirect` header set to the URL with the
+      // conversation ID
+      if (response.status === 204) {
+        if (response.headers["x-remix-redirect"]) {
+          let redirectUrl: string = response.headers["x-remix-redirect"];
+
+          // Strip the `/chats/` at the start to get the conversation ID
+          if (redirectUrl.startsWith('/chats/')) {
+            return redirectUrl.slice(7);
+          }
+        }
+      } else {
+        console.info(`Bad HTTP response status: ${response.status}`);
+      }
+    } catch (error: any) {
+      console.error('Error: ', error.response?.data || error.message);
+    }
+    return null;
+  }
+
   // NOTE: Not implementing /posts/${postId}/chat, as it just returns an HTTP 204, and I don't know what it does
 
   /**

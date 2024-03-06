@@ -1,6 +1,8 @@
 interface Conversation {
   /**
    * The unique id of the Conversation
+   *
+   * This can be acquired by using {@link PostAPI#getChatId}
    */
   id: string;
 

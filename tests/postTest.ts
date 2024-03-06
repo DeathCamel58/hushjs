@@ -87,4 +87,11 @@ describe('Posts', () => {
     expect(data).toBeDefined();
     expect(data).toBe(true);
   });
+
+  test('Get Conversation ID (61643448-d07a-4a9e-ac0f-d06dcbcbfcbc)', async () => {
+    let data = await client.posts.getChatId('61643448-d07a-4a9e-ac0f-d06dcbcbfcbc');
+
+    expect(data).toBeDefined();
+    expect(data?.length).toBe(36);
+  });
 });
